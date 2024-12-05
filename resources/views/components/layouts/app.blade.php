@@ -7,7 +7,8 @@
 
         <title>{{ $title ?? 'Page Title' }}</title>
     </head>
-    <body>
+    <body class="w-5/6 mx-auto">
+        <x-navbar/>
         {{ $slot }}
     </body>
 </html>
