@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ImagePost;
+use App\Models\ForumPost;
 use Illuminate\Http\Request;
 
 class ForumController extends Controller
@@ -22,22 +22,22 @@ class ForumController extends Controller
         //
     }
 
-    public function show(ImagePost $imagePost)
+    public function show(ForumPost $forum)
+    {
+        return view('forum.show', $forum);
+    }
+
+    public function edit(ForumPost $imagePost)
     {
         //
     }
 
-    public function edit(ImagePost $imagePost)
+    public function update(Request $request, ForumPost $imagePost)
     {
         //
     }
 
-    public function update(Request $request, ImagePost $imagePost)
-    {
-        //
-    }
-
-    public function destroy(ImagePost $imagePost)
+    public function destroy(ForumPost $imagePost)
     {
         //
     }
