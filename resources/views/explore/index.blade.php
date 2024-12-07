@@ -1,5 +1,4 @@
 <x-app-layout>
-    {{-- TODO:  --}}
     <div class="flex gap-5 justify-between my-5">
         <form action="" method="post" class="flex flex-col gap-2 grow-1">
             <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
@@ -12,7 +11,7 @@
                 <input type="search" id="default-search" class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary1 focus:border-primary1" placeholder="Search" required />
             </div>
         </form>
-        <x-button-fill text="Add Post" url="/login" class="px-10 rounded-md grow-0 self-center"/>
+        <x-button-fill text="Add Post" url="/forum/create" class="px-10 rounded-md grow-0 self-center"/>
     </div>
 
     <div >

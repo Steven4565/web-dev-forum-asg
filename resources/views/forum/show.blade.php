@@ -1,3 +1,3 @@
-<x-layouts.app>
+<x-app-layout>
     <x-forum-post-card/>
-</x-layouts.app>
+</x-app-layout>

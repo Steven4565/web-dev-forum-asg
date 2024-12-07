@@ -1,4 +1,4 @@
-<x-layouts.app>
+<x-app-layout>
     <div class="border-black border p-8 my-10">
         {{-- TODO:  --}}
         <form action="" method="post" class="flex flex-col gap-2">
@@ -24,4 +24,4 @@
         </form>
 
     </div>
-</x-layouts.app>
+</x-app-layout>
