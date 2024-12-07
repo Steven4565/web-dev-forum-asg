@@ -4,11 +4,6 @@ use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\ForumController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/welcome', 'welcome');
-
-Route::view('dashboard', 'explore.index')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
