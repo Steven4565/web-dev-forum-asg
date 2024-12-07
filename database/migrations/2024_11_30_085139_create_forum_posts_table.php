@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('forum_posts', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('category');
             $table->string('title');
-            $table->string('content');
-            $table->integer('views');
-            $table->integer('votes');
+            $table->longText('content');
+            $table->integer('views')->default(0);
+            $table->integer('votes')->default(0);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
         });
     }
