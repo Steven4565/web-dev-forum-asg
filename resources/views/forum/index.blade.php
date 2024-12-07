@@ -1,4 +1,4 @@
-<x-layouts.app>
+<x-app-layout>
     <div class="flex gap-2 mb-10">
         <span class="rounded-full bg-primary2 text-primary1 px-3 py-1 text-xs">New</span>
         <span class="rounded-full bg-primary2 text-primary1 px-3 py-1 text-xs">Top</span>
@@ -28,6 +28,6 @@
             </div>
         </div>
     </div>
-</x-layouts.app>
+</x-app-layout>
 
 
