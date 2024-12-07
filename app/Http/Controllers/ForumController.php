@@ -12,9 +12,16 @@ class ForumController extends Controller
     public function index()
     {
         $posts = DB::table('forum_posts')
-            ->join('users', 'forum_posts.user_id', '=', 'users.id')
-            ->select('forum_posts.*', 'users.name as user_name')
-            ->paginate(20);
+            ->leftJoin('users', 'forum_posts.user_id', '=', 'users.id')
+            ->leftJoin('forum_comments', 'forum_comments.forum_post_id', '=', 'forum_posts.id')
+            ->select(
+                'forum_posts.*',
+                'users.name as user_name',
+                DB::raw('COUNT(forum_comments.id) as comment_count')
+            )
+            ->groupBy('forum_posts.id', 'users.id')
+            ->paginate(10);
+
         return view('forum.index', compact('posts'));
     }
 
@@ -40,6 +47,8 @@ class ForumController extends Controller
 
     public function show(ForumPost $forum)
     {
+        ForumPost::where('id', $forum->id)->increment('views');
+        $forum->views++;
         return view('forum.show', compact('forum'));
     }
 

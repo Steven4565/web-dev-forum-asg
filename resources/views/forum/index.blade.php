@@ -14,7 +14,7 @@
     <div class="flex gap-16">
         <div class="flex-1 flex flex-col gap-5">
             @foreach ($posts as $post)
-                <x-forum-post-card :post="$post"/>
+                <x-forum.post-card :post="$post"/>
             @endforeach
             {{ $posts->links() }}
 
