@@ -2,16 +2,16 @@
 
 use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\ForumController;
-use App\Livewire\Counter;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('landing');
-});
 
+Route::view('profile', 'profile')
+    ->middleware(['auth'])
+    ->name('profile');
+
+Route::view('/', 'landing')->name('landing');
 Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
-Route::get('/forum/create', [ForumController::class, 'create'])->name('forum.create');
-Route::get('/forum/{forum}', [ForumController::class, 'show'])->name('forum.show');
+Route::get('/forum/create', [ForumController::class, 'create'])->middleware(['auth'])->name('forum.create');
 Route::get('/explore', [ExploreController::class, 'index'])->name('explore.index');
 
-Route::get('/counter', Counter::class);
+require __DIR__ . '/auth.php';
