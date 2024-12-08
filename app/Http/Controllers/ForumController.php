@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ForumPost;
 use App\Models\ForumComment;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -60,12 +61,23 @@ class ForumController extends Controller
         return redirect()->back();
     }
 
+    private function setCounts(Collection $comments)
+    {
+        foreach ($comments as $comment) {
+            $comment->reply_count = ForumComment::where('parent_id', $comment->id)->count();
+            if ($comment->replies->count() > 0) {
+                $this->setCounts($comment->replies);
+            }
+        }
+    }
+
     public function show(ForumPost $forum)
     {
         ForumPost::where('id', $forum->id)->increment('views');
         $forum->views++;
 
         $comments = ForumComment::where('forum_post_id', $forum->id)->whereNull('parent_id')->get();
+        $this->setCounts($comments);
         return view('forum.show', compact('forum', 'comments'));
     }
 

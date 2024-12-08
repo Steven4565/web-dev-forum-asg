@@ -8,7 +8,7 @@ state(['post_id', 'color', 'comment', 'vote_val', 'downvote_val', 'vote_state' =
 
 state(['replybox_visible' => false, 'replies_visible' => true]);
 
-state(['indent' => 0]);
+state(['indent' => 0, 'reply_count' => 0]);
 
 
 $vote = function () {
@@ -39,7 +39,7 @@ $toggle_replies = function () {
 };
 ?>
 
-<div class="ml-[30px]">
+<div class="{{$indent == 0 ? '' : 'ml-[30px]'}}">
     <div class="border-l-8 border-black p-5 shadow-md rounded-sm mb-5">
         <div class="flex gap-2 items-center">
             <img src="https://cdn.pixabay.com/photo/2024/02/28/07/42/european-shorthair-8601492_640.jpg" alt="" class="w-5 h-5 rounded-full">
@@ -60,7 +60,7 @@ $toggle_replies = function () {
                 </button>
             </div>
             <div class="flex gap-4">
-                <a wire:click="toggle_replies">{{$replies_visible ? 'Hide' : 'Show'}} all replies (0)</a>
+                <a wire:click="toggle_replies">{{$replies_visible ? 'Hide' : 'Show'}} all replies ({{$reply_count}})</a>
                 <a wire:click="toggle_replybox">reply</a>
             </div>
         </div>
@@ -73,7 +73,7 @@ $toggle_replies = function () {
     <div>
         @if ($replies_visible)
             @foreach ($comment->replies as $reply)
-                <livewire:pages.forum.comment-card :comment="$reply" :color="'#000000'" :vote_val="$reply->votes" :indent="$indent+1" :post_id="$post_id" :replies_visible="$indent < 2 ? true : false"/>
+                <livewire:pages.forum.comment-card :comment="$reply" :color="'#000000'" :vote_val="$reply->votes" :indent="$indent+1" :post_id="$post_id" :replies_visible="$indent < 2 ? true : false" :reply_count="$reply->reply_count"/>
             @endforeach
         @endif
 
