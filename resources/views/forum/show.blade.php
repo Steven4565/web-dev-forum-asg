@@ -7,7 +7,7 @@
             <x-forum.textbox :post_id="$forum->id"/>
             <div class="flex flex-col gap-3 mt-10">
                 @foreach($comments as $comment)
-                    <x-forum.comment-card :comment="$comment" :color="'#000000'"/>
+                    <livewire:pages.forum.comment-card :comment="$comment" :color="'#000000'" :vote_val="$comment->votes" :post_id="$forum->id"/>
                 @endforeach
             </div>
         </div>

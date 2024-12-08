@@ -50,14 +50,14 @@ class ForumController extends Controller
     {
         $validatedData = $request->validate([
             'content' => 'required|string',
-            'forum_post_id' => 'required|int'
+            'forum_post_id' => 'required|int',
+            'parent_id' => 'int'
         ]);
 
         $validatedData['user_id'] = Auth::user()->id;
 
-
         ForumComment::create($validatedData);
-        // TODO: refresh page
+        return redirect()->back();
     }
 
     public function show(ForumPost $forum)
@@ -65,7 +65,7 @@ class ForumController extends Controller
         ForumPost::where('id', $forum->id)->increment('views');
         $forum->views++;
 
-        $comments = ForumComment::where('forum_post_id', $forum->id)->get();
+        $comments = ForumComment::where('forum_post_id', $forum->id)->whereNull('parent_id')->get();
         return view('forum.show', compact('forum', 'comments'));
     }
 
