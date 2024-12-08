@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ForumPost;
+use App\Models\ForumComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -45,11 +46,27 @@ class ForumController extends Controller
         return redirect()->route('forum.index');
     }
 
+    public function storeComment(Request $request)
+    {
+        $validatedData = $request->validate([
+            'content' => 'required|string',
+            'forum_post_id' => 'required|int'
+        ]);
+
+        $validatedData['user_id'] = Auth::user()->id;
+
+
+        ForumComment::create($validatedData);
+        // TODO: refresh page
+    }
+
     public function show(ForumPost $forum)
     {
         ForumPost::where('id', $forum->id)->increment('views');
         $forum->views++;
-        return view('forum.show', compact('forum'));
+
+        $comments = ForumComment::where('forum_post_id', $forum->id)->get();
+        return view('forum.show', compact('forum', 'comments'));
     }
 
     public function edit(ForumPost $imagePost)

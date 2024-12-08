@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('forum_comments', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('title');
             $table->string('content');
-            $table->integer('votes');
+            $table->integer('votes')->default(0);
 
             $table->unsignedBigInteger('parent_id')->nullable()->index();
             $table->foreign('parent_id')->references('id')->on('forum_comments')->onDelete('cascade');
