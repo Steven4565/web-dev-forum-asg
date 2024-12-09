@@ -12,4 +12,11 @@ class ForumPost extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function voters()
+    {
+        return $this->belongsToMany(User::class, 'post_user_vote')
+                    ->withPivot('vote')
+                    ->withTimestamps();
+    }
 }

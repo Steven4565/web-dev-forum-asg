@@ -11,7 +11,9 @@
             <p class="p">{{$post->content}}</p>
 
             <div class="flex justify-end w-full">
-                <x-forum.vote-button text="Vote" class="px-10 rounded-md"/>
+                <!-- <x-forum.vote-button text="Vote" class="px-10 rounded-md"/> -->
+                <livewire:vote-button :post="$post" class="px-10 rounded-md" />
+
             </div>
 
         </div>

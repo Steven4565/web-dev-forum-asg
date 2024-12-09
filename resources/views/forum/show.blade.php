@@ -4,7 +4,9 @@
             <x-forum.post-card-detail :post="$forum"/>
 
             <h2 class="h2 font-bold text-xl my-10">Comments</h2>
+
             <x-forum.textbox :post_id="$forum->id"/>
+            
             <div class="flex flex-col gap-3 mt-10">
                 @foreach($comments as $comment)
                     <livewire:pages.forum.comment-card :comment="$comment" :color="'#000000'" :vote_val="$comment->votes" :post_id="$forum->id" :reply_count="$comment->reply_count"/>
