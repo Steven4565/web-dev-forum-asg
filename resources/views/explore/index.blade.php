@@ -16,9 +16,9 @@
 
     <!-- Image Gallery -->
     <div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="mason-grid">
             @foreach ($images as $image)
-                <div>
+                <div class="grid-item-mason w-[180px] mb-4">
                     <button
                         x-data=""
                         x-on:click.prevent="$dispatch('open-modal',
