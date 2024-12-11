@@ -7,8 +7,10 @@ use Livewire\Component;
 class Modal extends Component
 {
     public $isOpen = false;
-    public $imageSrc = ''; // Initialize default value
-    public $description = ''; // Initialize default value
+    public $imageSrc = '';
+    public $description = '';
+
+    protected $listeners = ['openModal'];
 
     public function openModal($imageSrc, $description)
     {

@@ -19,14 +19,25 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             @foreach ($images as $image)
                 <div>
-                    <button wire:click="$emit('openModal', '{{ $image['src'] }}', '{{ $image['description'] }}')">
-                        <img class="h-auto max-w-full rounded-lg" src="{{ $image['src'] }}" alt="{{ $image['description'] }}">
+                    <button
+                        x-data=""
+                        x-on:click.prevent="$dispatch('open-modal',
+                            {
+                                'name': 'image-modal',
+                                'modalData': {
+                                    'title': '{{ $image["title"] }}',
+                                    'description': '{{ $image["description"] }}',
+                                    'url': '{{ $image["url"] }}'
+                                }
+                            })
+                         "
+                    >
+                        <img class="h-auto max-w-full rounded-lg" src="{{ $image['url'] }}" alt="{{ $image['description'] }}">
                     </button>
                 </div>
             @endforeach
         </div>
     </div>
 
-    <!-- Modal Component -->
-    <livewire:modal />
+    <x-image-modal name="image-modal" focusable />
 </x-app-layout>
