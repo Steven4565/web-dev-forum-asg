@@ -60,7 +60,7 @@ $toggle_replies = function () {
                 </button>
             </div>
             <div class="flex gap-4">
-                <a wire:click="toggle_replies">{{$replies_visible ? 'Hide' : 'Show'}} all replies ({{$reply_count}})</a>
+                <a wire:click="toggle_replies" class="{{$reply_count > 0 ? "inline-block" : "hidden"}}">{{$replies_visible ? 'Hide' : 'Show'}} all replies ({{$reply_count}})</a>
                 <a wire:click="toggle_replybox">reply</a>
             </div>
         </div>
@@ -70,12 +70,10 @@ $toggle_replies = function () {
             <livewire:pages.forum.replybox :post_id="$post_id" :parent_id="$comment->id"/>
         @endif
     </div>
-    <div>
-        @if ($replies_visible)
-            @foreach ($comment->replies as $reply)
-                <livewire:pages.forum.comment-card :comment="$reply" :color="'#000000'" :vote_val="$reply->votes" :indent="$indent+1" :post_id="$post_id" :replies_visible="$indent < 2 ? true : false" :reply_count="$reply->reply_count"/>
-            @endforeach
-        @endif
+    <div class="{{$replies_visible ? "block" : "hidden"}}">
+        @foreach ($comment->replies as $reply)
+            <livewire:pages.forum.comment-card :comment="$reply" :color="'#000000'" :vote_val="$reply->votes" :indent="$indent+1" :post_id="$post_id" :replies_visible="$indent < 2 ? true : false" :reply_count="$reply->reply_count"/>
+        @endforeach
 
     </div>
 </div>

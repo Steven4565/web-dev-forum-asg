@@ -61,12 +61,14 @@ class ForumController extends Controller
         return redirect()->back();
     }
 
-    private function setCounts(Collection $comments)
+    private function setCounts(Collection $comments, $level = 0)
     {
+        // if ($level > 2) return;
+
         foreach ($comments as $comment) {
             $comment->reply_count = ForumComment::where('parent_id', $comment->id)->count();
-            if ($comment->replies->count() > 0) {
-                $this->setCounts($comment->replies);
+            if ($comment->reply_count > 0) {
+                $this->setCounts($comment->replies, $level + 1);
             }
         }
     }
