@@ -27,7 +27,8 @@ $logout = function (Logout $logout) {
                     <x-nav-link :href="route('forum.index')" :active="request()->routeIs('forum.index')" wire:navigate>
                         Forum
                     </x-nav-link>
-                    <x-nav-link :href="route('explore.index')" :active="request()->routeIs('explore.index')" wire:navigate>
+                    {{-- Don't use wire:navigate here or we'll break the mason grid --}}
+                    <x-nav-link :href="route('explore.index')" :active="request()->routeIs('explore.index')" >
                         Explore
                     </x-nav-link>
                 </div>

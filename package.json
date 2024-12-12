@@ -16,7 +16,6 @@
         "vite": "^5.0"
     },
     "dependencies": {
-        "macy": "^2.5.1",
         "masonry-layout": "^4.2.2"
     }
 }
