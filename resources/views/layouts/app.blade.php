@@ -17,13 +17,27 @@
 </head>
 
 <body class="font-sans antialiased">
-    <livewire:layout.navigation />
+    @if (request()->is('/'))
+    <div>
+        <div class="w-full bg-white border-b border-gray-100" style="margin: 0; padding: 0;">
+            <div class="w-5/6 mx-auto">
+                <livewire:layout.navigation />
+            </div>
+        </div>
+        <main>
+            {{ $slot }}
+        </main>
+    </div>
+    @else
+    <!-- Default Layout -->
     <div class="w-5/6 mx-auto">
+        <livewire:layout.navigation />
         <!-- Page Content -->
         <main>
             {{ $slot }}
         </main>
     </div>
+    @endif
 </body>
 
 </html>

@@ -10,7 +10,7 @@ $logout = function (Logout $logout) {
 
 ?>
 
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 mb-5">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 {{ request()->is('/') ? '' : 'mb-5' }}">
     <!-- Primary Navigation Menu -->
 
     <!-- <div class="max-w-11xl mx-auto px-4 sm:px-6 lg:px-8"> Raym -->
@@ -20,9 +20,8 @@ $logout = function (Logout $logout) {
                 <div class="flex items-center space-x-2">
                     <!-- Logo -->
                     <a href="{{ route('landing') }}" wire:navigate class="flex items-center space-x-2">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                        <!-- Brand Name -->
-                        <span class="text-gray-800 hover:text-black transition font-medium text-lg">
+                        <!-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> -->
+                        <span class="transition font-bold text-lg text-[#FC5E8F]">
                             UwawaUwa
                         </span>
                     </a>
