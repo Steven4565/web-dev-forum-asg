@@ -16,9 +16,9 @@
 
     <!-- Image Gallery -->
     <div>
-        <div class="mason-grid">
+        <div id="macy-container">
             @foreach ($images as $image)
-                <div class="grid-item-mason w-[180px] mb-4">
+                <div class="grid-item-mason mb-4">
                     <button
                         x-data=""
                         x-on:click.prevent="$dispatch('open-modal',
