@@ -12,7 +12,7 @@
 
             <div class="flex justify-end w-full">
                 <!-- <x-forum.vote-button text="Vote" class="px-10 rounded-md"/> -->
-                <livewire:vote-button :post="$post" class="px-10 rounded-md" />
+                <livewire:pages.forum.vote-button :post="$post" class="px-10 rounded-md" />
 
             </div>
 

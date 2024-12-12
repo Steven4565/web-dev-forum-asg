@@ -1,26 +1,19 @@
 <?php
 
-namespace App\Livewire;
+    use function Livewire\Volt\state;
+    use function Livewire\Volt\{mount};
+    use App\Models\ForumPost;
+    use App\Models\User;
 
-use App\Models\User;
-use Livewire\Component;
-use Illuminate\Support\Facades\Auth;
+    state(['isVoted', 'post', 'class']);
 
-class VoteButton extends Component
-{
-
-    public $post;
-    public $isVoted;
-    public $class;
-
-    public function mount($post)
-    {
+    mount(function (ForumPost $post)  {
         $this->post = $post;
         $this->isVoted = User::find(Auth::id())->votedPosts()->where('forum_post_id', $post->id)->exists();
-    }
+    });
 
-    public function toggleVote()
-    {
+
+    $toggleVote = function () {
         $user = User::find(Auth::id());
 
 
@@ -35,10 +28,12 @@ class VoteButton extends Component
         }
 
         $this->isVoted = !$this->isVoted;
-    }
+    };
 
-    public function render()
-    {
-        return view('livewire.vote-button');
-    }
-}
+?>
+
+<button
+    wire:click="toggleVote"
+    class="btn text-primary1 py-2 px-5 font-bold bg-primary2 {{ $class ?? '' }}">
+    {{ $isVoted ? 'Unvote' : 'Vote' }}
+</button>
