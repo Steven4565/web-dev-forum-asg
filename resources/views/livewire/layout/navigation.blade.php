@@ -17,10 +17,14 @@ $logout = function (Logout $logout) {
     <div class="w-full px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('landing') }}" wire:navigate>
+                <div class="flex items-center space-x-2">
+                    <!-- Logo -->
+                    <a href="{{ route('landing') }}" wire:navigate class="flex items-center space-x-2">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <!-- Brand Name -->
+                        <span class="text-gray-800 hover:text-black transition font-medium text-lg">
+                            UwawaUwa
+                        </span>
                     </a>
                 </div>
 
