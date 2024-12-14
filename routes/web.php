@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\ForumController;
-use App\Models\ForumComment;
 use Illuminate\Support\Facades\Route;
 
 

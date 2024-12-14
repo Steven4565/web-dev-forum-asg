@@ -9,6 +9,7 @@
 
     mount(function (ForumPost $post)  {
         $this->post = $post;
+        if (Auth::user())
         $this->isVoted = User::find(Auth::id())->votedPosts()->where('forum_post_id', $post->id)->exists();
     });
 

@@ -1,33 +1,75 @@
 <?php
 
 use function Livewire\Volt\state;
+use function Livewire\Volt\{mount};
 use App\Models\ForumComment;
 
 
-state(['post_id', 'color', 'comment', 'vote_val', 'downvote_val', 'vote_state' => false, 'downvote_state' => false]);
+# Requierd fields
+state(['post_id', 'color', 'comment']);
 
-state(['replybox_visible' => false, 'replies_visible' => true]);
+# Reply states
+state(['replybox_visible' => false, 'replies_visible' => true, 'reply_count' => 0]);
 
-state(['indent' => 0, 'reply_count' => 0]);
+# Vote states
+state(['vote_val' => 0, 'downvote_val' => 0, 'vote_option' => 0]);
 
+# Depth state
+state(['indent' => 0,]);
+
+mount(function() {
+    # TODO:
+    $this->vote_val = $this->comment->votes;
+    $this->downvote_val = $this->comment->votes;
+    $this->reply_count = $this->comment->reply_count;
+});
+
+$updateDatabase = function ($val) {
+    ForumComment::find($this->comment->id)->voters()->updateExistingPivot($this->comment->id, [
+        'vote_value' => \DB::raw($val)
+    ]);
+};
 
 $vote = function () {
-    $this->vote_state = ! $this->vote_state;
-    if ($this->vote_state == true)
-        $this->vote_val++;
-    else
-        $this->vote_val--;
 
-    ForumComment::where('id', '=', $this->comment->id)->increment('votes');
+    if ($this->vote_option == 1) {
+        $this->vote_option = 0;
+        $this->updateDatabase(0);
+
+        $this->vote_val -= 1;
+    } else if ($this->vote_option == -1) {
+        $this->vote_option = 1;
+        $this->updateDatabase(1);
+
+        $this->vote_val += 1;
+        $this->downvote_val -= 1;
+    } else {
+        $this->vote_option = 1;
+        $this->updateDatabase(1);
+
+        $this->vote_val += 1;
+    }
+
 };
 
 $downvote = function() {
-    $this->downvote_state = ! $this->downvote_state;
-    if ($this->downvote_state == true)
-        $this->downvote_val++;
-    else
-        $this->downvote_val--;
-    ForumComment::where('id', '=', $this->comment->id)->decrement('votes');
+    if ($this->vote_option == -1) {
+        $this->vote_option = 0;
+        $this->updateDatabase(0);
+
+        $this->downvote_val -= 1;
+    } else if ($this->vote_option == 1) {
+        $this->vote_option = -1;
+        $this->updateDatabase(-1);
+
+        $this->vote_val -= 1;
+        $this->downvote_val += 1;
+    } else {
+        $this->vote_option = -1;
+        $this->updateDatabase(-1);
+
+        $this->downvote_val += 1;
+    }
 };
 
 $toggle_replybox = function() {
@@ -51,11 +93,11 @@ $toggle_replies = function () {
         <div class="flex justify-between w-full gap-4">
             <div class="flex gap-4 ">
                 <button class="flex gap-2" wire:click="vote">
-                    <span class="{{$vote_state ? 'text-primary1' : 'text-black'}}">up</span>
+                    <span class="{{$vote_option == 1 ? 'text-primary1' : 'text-black'}}">up</span>
                     <span>{{$vote_val}}</span>
                 </button>
                 <button class="flex gap-2" wire:click="downvote">
-                    <span class="{{$downvote_state ? 'text-primary1' : 'text-black'}}">down</span>
+                    <span class="{{$vote_option == -1? 'text-primary1' : 'text-black'}}">down</span>
                     <span>{{$downvote_val}}</span>
                 </button>
             </div>
