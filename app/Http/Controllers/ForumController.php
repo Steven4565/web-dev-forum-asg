@@ -88,10 +88,13 @@ class ForumController extends Controller
         }
     }
 
-    public function show(ForumPost $forum)
+    public function show(Request $request, ForumPost $forum)
     {
-        ForumPost::where('id', $forum->id)->increment('views');
-        $forum->views++;
+        if ($request->has('view') && $request->query('view') === 'true') {
+            ForumPost::where('id', $forum->id)->increment('views');
+            return redirect($request->url());
+        }
+
 
         $comments = ForumComment::where('forum_post_id', $forum->id)->whereNull('parent_id')->get();
         $this->setCounts($comments);
