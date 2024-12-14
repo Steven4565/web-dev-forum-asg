@@ -25,7 +25,7 @@ class ForumComment extends Model
     public function voters()
     {
         return $this->belongsToMany(User::class, 'forum_comments_users')
-            ->withPivot(['upvote', 'downvote'])
+            ->withPivot(['vote_value'])
             ->withTimestamps();
     }
 }

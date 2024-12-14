@@ -68,6 +68,21 @@ class ForumController extends Controller
     {
         foreach ($comments as $comment) {
             $comment->reply_count = ForumComment::where('parent_id', $comment->id)->count();
+            $upvote_count = 0;
+            $downvote_count = 0;
+
+            $voters = $comment->voters()->get();
+            foreach ($voters as $voter) {
+                if ($voter->pivot->vote_value == 1)
+                    $upvote_count++;
+                if ($voter->pivot->vote_value == -1)
+                    $downvote_count++;
+            }
+
+            $comment->upvote_count = $upvote_count;
+            $comment->downvote_count = $downvote_count;
+
+
             if ($comment->reply_count > 0) {
                 $this->setCounts($comment->replies, $level + 1);
             }

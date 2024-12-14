@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('forum_comment_id')->constrained('forum_comments')->onDelete('cascade');
 
-            $table->boolean('vote_value')->default(0);
+            $table->integer('vote_value')->default(0);
 
             $table->unique(['user_id', 'forum_comment_id']);
         });

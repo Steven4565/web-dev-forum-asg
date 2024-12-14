@@ -3,6 +3,7 @@
 use function Livewire\Volt\state;
 use function Livewire\Volt\{mount};
 use App\Models\ForumComment;
+use Illuminate\Support\Facades\Auth;
 
 
 # Requierd fields
@@ -12,16 +13,22 @@ state(['post_id', 'color', 'comment']);
 state(['replybox_visible' => false, 'replies_visible' => true, 'reply_count' => 0]);
 
 # Vote states
-state(['vote_val' => 0, 'downvote_val' => 0, 'vote_option' => 0]);
+state(['upvote_val' => 0, 'downvote_val' => 0, 'vote_option' => 0]);
 
 # Depth state
 state(['indent' => 0,]);
 
 mount(function() {
-    # TODO:
-    $this->vote_val = $this->comment->votes;
-    $this->downvote_val = $this->comment->votes;
+    $this->upvote_val = $this->comment->upvote_count;
+    $this->downvote_val = $this->comment->downvote_count;
     $this->reply_count = $this->comment->reply_count;
+
+
+    $pivot_table = $this->comment->voters->find(Auth::id());
+    if ($pivot_table) {
+        $this->vote_option = pivot_table->pivot->vote_value;
+    }
+
 });
 
 $updateDatabase = function ($val) {
@@ -36,18 +43,18 @@ $vote = function () {
         $this->vote_option = 0;
         $this->updateDatabase(0);
 
-        $this->vote_val -= 1;
+        $this->upvote_val -= 1;
     } else if ($this->vote_option == -1) {
         $this->vote_option = 1;
         $this->updateDatabase(1);
 
-        $this->vote_val += 1;
+        $this->upvote_val += 1;
         $this->downvote_val -= 1;
     } else {
         $this->vote_option = 1;
         $this->updateDatabase(1);
 
-        $this->vote_val += 1;
+        $this->upvote_val += 1;
     }
 
 };
@@ -62,7 +69,7 @@ $downvote = function() {
         $this->vote_option = -1;
         $this->updateDatabase(-1);
 
-        $this->vote_val -= 1;
+        $this->upvote_val -= 1;
         $this->downvote_val += 1;
     } else {
         $this->vote_option = -1;
@@ -94,7 +101,7 @@ $toggle_replies = function () {
             <div class="flex gap-4 ">
                 <button class="flex gap-2" wire:click="vote">
                     <span class="{{$vote_option == 1 ? 'text-primary1' : 'text-black'}}">up</span>
-                    <span>{{$vote_val}}</span>
+                    <span>{{$upvote_val}}</span>
                 </button>
                 <button class="flex gap-2" wire:click="downvote">
                     <span class="{{$vote_option == -1? 'text-primary1' : 'text-black'}}">down</span>
@@ -114,7 +121,7 @@ $toggle_replies = function () {
     </div>
     <div class="{{$replies_visible ? "block" : "hidden"}}">
         @foreach ($comment->replies as $reply)
-            <livewire:pages.forum.comment-card :comment="$reply" :color="'#000000'" :vote_val="$reply->votes" :indent="$indent+1" :post_id="$post_id" :replies_visible="$indent < 2 ? true : false" :reply_count="$reply->reply_count"/>
+            <livewire:pages.forum.comment-card :comment="$reply" :color="'#000000'" :upvote_val="$reply->votes" :indent="$indent+1" :post_id="$post_id" :replies_visible="$indent < 2 ? true : false" :reply_count="$reply->reply_count"/>
         @endforeach
 
     </div>
