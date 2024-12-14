@@ -23,7 +23,6 @@
         <div class="w-[300px]">
             <div class="shadow-md p-5">
                 <div class="flex gap-2 py-4">
-                    {{-- TODO: icon here --}}
                     <h3 class="h3 font-bold">Must-read posts</h3>
                 </div>
                 <div class="flex flex-col gap-3">
