@@ -59,7 +59,6 @@ class ForumController extends Controller
         $validatedData['user_id'] = Auth::user()->id;
 
         $comment = ForumComment::create($validatedData);
-        User::find(Auth::id())->votedComments()->attach($comment->id);
 
         return redirect()->back();
     }

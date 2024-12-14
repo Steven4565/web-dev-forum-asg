@@ -3,6 +3,7 @@
 use function Livewire\Volt\state;
 use function Livewire\Volt\{mount};
 use App\Models\ForumComment;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -26,18 +27,23 @@ mount(function() {
 
     $pivot_table = $this->comment->voters->find(Auth::id());
     if ($pivot_table) {
-        $this->vote_option = pivot_table->pivot->vote_value;
+        $this->vote_option = $pivot_table->pivot->vote_value;
     }
 
 });
 
 $updateDatabase = function ($val) {
-    ForumComment::find($this->comment->id)->voters()->updateExistingPivot($this->comment->id, [
+    ForumComment::find($this->comment->id)->voters()->updateExistingPivot(Auth::id(), [
         'vote_value' => \DB::raw($val)
     ]);
 };
 
+$attachUser = function() {
+    User::find(Auth::id())->votedComments()->syncWithoutDetaching($this->comment->id);
+};
+
 $vote = function () {
+    $this->attachUser();
 
     if ($this->vote_option == 1) {
         $this->vote_option = 0;
@@ -60,6 +66,8 @@ $vote = function () {
 };
 
 $downvote = function() {
+    $this->attachUser();
+
     if ($this->vote_option == -1) {
         $this->vote_option = 0;
         $this->updateDatabase(0);
