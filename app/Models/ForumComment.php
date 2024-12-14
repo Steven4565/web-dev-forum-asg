@@ -21,4 +21,11 @@ class ForumComment extends Model
     {
         return $this->belongsTo(ForumComment::class, 'parent_id');
     }
+
+    public function voters()
+    {
+        return $this->belongsToMany(User::class, 'forum_comments_users')
+            ->withPivot(['vote_value'])
+            ->withTimestamps();
+    }
 }
