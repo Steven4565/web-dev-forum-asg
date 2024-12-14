@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ForumComment extends Model
 {
+    protected $fillable = ['parent_id', 'content', 'user_id', 'forum_post_id'];
     public function author()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function replies()
@@ -19,5 +20,12 @@ class ForumComment extends Model
     public function parent()
     {
         return $this->belongsTo(ForumComment::class, 'parent_id');
+    }
+
+    public function voters()
+    {
+        return $this->belongsToMany(User::class, 'forum_comments_users')
+            ->withPivot(['vote_value'])
+            ->withTimestamps();
     }
 }

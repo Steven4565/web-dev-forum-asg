@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('forum_comments', function (Blueprint $table) {
+        Schema::create('post_user_vote', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->string('content');
-
-            $table->unsignedBigInteger('parent_id')->nullable()->index();
-            $table->foreign('parent_id')->references('id')->on('forum_comments')->onDelete('cascade');
-
-            $table->foreignId('forum_post_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('forum_post_id')->constrained('forum_posts')->onDelete('cascade');
+            $table->boolean('vote')->default(true); // True for vote, false for unvote
+            $table->timestamps();
+            
+            $table->unique(['user_id', 'forum_post_id']); // Prevent duplicate votes
         });
     }
 
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('forum_comments');
+        Schema::dropIfExists('post_user_vote');
     }
 };

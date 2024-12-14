@@ -11,7 +11,9 @@
                 <input type="search" id="default-search" class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary1 focus:border-primary1" placeholder="Search" required />
             </div>
         </form>
-        <x-button-fill text="Add Post" url="/explore/create" class="px-10 rounded-md grow-0 self-center"/>
+        @auth
+            <x-button-fill text="Add Post" url="/explore/create" class="px-10 rounded-md grow-0 self-center"/>
+        @endauth
     </div>
 
     <!-- Image Gallery -->
