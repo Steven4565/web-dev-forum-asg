@@ -36,6 +36,8 @@ RUN npm install
 COPY . /var/www/html
 RUN npm run build
 
+RUN php artisan storage:link
+
 # Set the working directory
 WORKDIR /var/www/html
 

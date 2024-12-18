@@ -1,6 +1,6 @@
 services:
   web:
-    image: laravel-forum:latest
+    image: steven4565/webdev-forum-asg:latest
     build:
       target: web
       context: .
