@@ -14,10 +14,9 @@ Route::view('/', 'landing')->name('landing');
 
 
 Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
-Route::get('/forum/{forum}', [ForumController::class, 'show'])->name('forum.show');
 Route::get('/forum/create', [ForumController::class, 'create'])->middleware(['auth'])->name('forum.create');
 Route::post('/forum/create', [ForumController::class, 'store'])->middleware(['auth'])->name('forum.store');
-
+Route::get('/forum/{forum}', [ForumController::class, 'show'])->name('forum.show');
 
 Route::post('/comment/create', [ForumController::class, 'storeComment'])->middleware(['auth'])->name('comment.store');
 
