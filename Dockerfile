@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip
 
-ENV NODE_VERSION=16.13.0
+ENV NODE_VERSION=22.12.0
 RUN apt install -y curl
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 ENV NVM_DIR=/root/.nvm
@@ -30,8 +30,11 @@ ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Copy the application code
+# Copy the package.json
+COPY package.json package-lock.json /var/www/html/
+RUN npm install
 COPY . /var/www/html
+RUN npm run build
 
 # Set the working directory
 WORKDIR /var/www/html
@@ -43,8 +46,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Install project dependencies
 RUN composer install
-RUN npm install
-RUN npm run build
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
