@@ -1,11 +1,5 @@
 <x-app-layout>
-    <div class="flex justify-between items-center mb-5">
-        <div class="flex gap-2 justify-center h-full">
-            <span class="rounded-full bg-primary2 text-primary1 px-3 py-1 text-xs">New</span>
-            <span class="rounded-full bg-primary2 text-primary1 px-3 py-1 text-xs">Top</span>
-            <span class="rounded-full bg-primary2 text-primary1 px-3 py-1 text-xs">Hot</span>
-            <span class="rounded-full bg-primary2 text-primary1 px-3 py-1 text-xs">Closed</span>
-        </div>
+    <div class="flex justify-end items-center mb-5">
         @auth
             <x-button-fill text="Add Post" url="/forum/create" class="px-10 rounded-md grow-0 self-center text-xs"/>
         @endauth
