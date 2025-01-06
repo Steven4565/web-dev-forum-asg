@@ -8,6 +8,7 @@ use App\Models\ImagePost;
 use App\Models\User;
 use App\Models\ForumComment;
 use Faker\Factory;
+use Illuminate\Support\Facades\File;
 
 class PostAndStuff extends Seeder
 {
@@ -34,18 +35,45 @@ class PostAndStuff extends Seeder
             ]);
         }
 
-        // Image URLs
+        // CHANGE THE LINK IF YOU WANT TO CHANGE THE PICTURE
         $imageUrls = [
-            '1.jpeg',
-            '2.jpeg',
-            '3.jpeg',
-            '4.jpeg',
-            '5.jpeg',
-            '6.jpeg',
-            '7.jpeg',
-            '8.jpeg',
-            '9.jpeg',
-        ];
+            'https://placecats.com/300/200',
+            'https://placecats.com/neo/300/200',
+            'https://placecats.com/millie/300/150',
+            'https://placecats.com/millie_neo/300/200',
+            'https://placecats.com/neo_banana/300/200',
+            'https://placecats.com/neo_2/300/200',
+            'https://placecats.com/bella/300/200',
+            ];
+
+        $storagePath = public_path('storage/images'); // Path to public storage folder
+
+    // Ensure the directory exists
+        if (!File::exists($storagePath)) {
+            File::makeDirectory($storagePath, 0775, true);
+        }
+
+        $savedImagePaths = [];
+        $imageCounter = 1; // Initialize a counter to keep track of the image number
+
+        foreach ($imageUrls as $imageUrl) {
+            $imageContent = file_get_contents($imageUrl); // Download image content
+
+            if ($imageContent) {
+                // Rename image to a static name (e.g., 1.jpeg, 2.jpeg, etc.)
+                $imageName = $imageCounter . '.jpeg';  // Set the desired file name
+                $filePath = $storagePath . '/' . $imageName; // Define the full save path
+
+                File::put($filePath, $imageContent); // Save the file locally
+                $savedImagePaths[] = 'public/images/' . $imageName; // Store the relative path
+                
+                $imageCounter++; // Increment the counter for the next image
+            } else {
+                echo "Failed to download: " . $imageUrl . PHP_EOL;
+            }
+        }
+
+
 
         // Create ForumPosts
         $posts = [];
@@ -64,7 +92,7 @@ class PostAndStuff extends Seeder
         for ($i = 0; $i < 5; $i++) {
             $randomUser = $faker->randomElement($postUsers); // Full user object
             ImagePost::create([
-                'url' => 'images/' . $faker->randomElement($imageUrls),
+                'url' => $faker->randomElement($savedImagePaths), // Use local path
                 'title' => $faker->word(),
                 'description' => $faker->paragraph(),
                 'user_id' => $randomUser->id, // Use the user's ID
