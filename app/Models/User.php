@@ -60,4 +60,18 @@ class User extends Authenticatable
     {
         return $this->hasMany(ForumComment::class);
     }
+
+    public function votedPosts()
+    {
+        return $this->belongsToMany(ForumPost::class, 'post_user_vote')
+            ->withPivot('vote')
+            ->withTimestamps();
+    }
+
+    public function votedComments()
+    {
+        return $this->belongsToMany(ForumComment::class, 'forum_comments_users')
+            ->withPivot(['upvote', 'downvote'])
+            ->withTimestamps();
+    }
 }
