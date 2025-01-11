@@ -14,7 +14,7 @@ class PostAndStuff extends Seeder
 {
     public function run(): void
     {
-        $faker = Factory::create("ar_SA");
+        $faker = Factory::create("id_ID");
 
         // Create users for posts and comments and store full objects
         $postUsers = [];
@@ -44,11 +44,11 @@ class PostAndStuff extends Seeder
             'https://placecats.com/neo_banana/300/200',
             'https://placecats.com/neo_2/300/200',
             'https://placecats.com/bella/300/200',
-            ];
+        ];
 
         $storagePath = public_path('storage/images'); // Path to public storage folder
 
-    // Ensure the directory exists
+        // Ensure the directory exists
         if (!File::exists($storagePath)) {
             File::makeDirectory($storagePath, 0775, true);
         }
@@ -66,7 +66,7 @@ class PostAndStuff extends Seeder
 
                 File::put($filePath, $imageContent); // Save the file locally
                 $savedImagePaths[] = 'public/images/' . $imageName; // Store the relative path
-                
+
                 $imageCounter++; // Increment the counter for the next image
             } else {
                 echo "Failed to download: " . $imageUrl . PHP_EOL;

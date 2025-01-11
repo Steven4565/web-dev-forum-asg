@@ -11,10 +11,11 @@
     <div class="w-5/6 mx-auto">
         <div class="px-10 text-left mt-[20%]">
             <h1 class="text-primary1 font-medium text-[50px] leading-[66px] tracking-[1px] mb-2 max-w-[600px]">
-                Introduce Your Product Quickly & Effectively
+                Empower Women, Empower the Future
             </h1>
-            <p class="text-primary-1 mb-4">Lorem ipsum</p>
-            <x-button-fill text="Explore Now" url="/login" class="px-10" />
+            <p class="text-primary-1 mb-4">
+                Join us in creating a world where every voice matters, and every opportunity is equal.
+            </p>
         </div>
     </div>
 
@@ -30,10 +31,11 @@
     <div class="w-5/6 mx-auto">
         <div class="px-10 text-right mt-[50%] mb-[50%]">
             <h1 class="text-primary1 font-medium text-[50px] leading-[66px] tracking-[1px] mb-2 max-w-[600px] ml-auto">
-                Introduce Your Product Quickly & Effectively
+                Building Bridges for Gender Equality
             </h1>
-            <p class="text-primary-1 mb-4 max-w-[600px] ml-auto">Lorem ipsum</p>
-            <x-button-fill text="Purchase UI Kit" url="/login" class="px-10" />
+            <p class="text-primary-1 mb-4 max-w-[600px] ml-auto">
+                Supporting initiatives that inspire and empower women across the globe
+            </p>
         </div>
     </div>
 
