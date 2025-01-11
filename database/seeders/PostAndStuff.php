@@ -14,7 +14,7 @@ class PostAndStuff extends Seeder
 {
     public function run(): void
     {
-        $faker = Factory::create("id_ID");
+        $faker = Factory::create("en_US");
 
         // Create users for posts and comments and store full objects
         $postUsers = [];
@@ -36,42 +36,42 @@ class PostAndStuff extends Seeder
         }
 
         // CHANGE THE LINK IF YOU WANT TO CHANGE THE PICTURE
-        $imageUrls = [
-            'https://placecats.com/300/200',
-            'https://placecats.com/neo/300/200',
-            'https://placecats.com/millie/300/150',
-            'https://placecats.com/millie_neo/300/200',
-            'https://placecats.com/neo_banana/300/200',
-            'https://placecats.com/neo_2/300/200',
-            'https://placecats.com/bella/300/200',
-        ];
+        // $imageUrls = [
+        //     'https://placecats.com/300/200',
+        //     'https://placecats.com/neo/300/200',
+        //     'https://placecats.com/millie/300/150',
+        //     'https://placecats.com/millie_neo/300/200',
+        //     'https://placecats.com/neo_banana/300/200',
+        //     'https://placecats.com/neo_2/300/200',
+        //     'https://placecats.com/bella/300/200',
+        // ];
 
-        $storagePath = public_path('storage/images'); // Path to public storage folder
+        // $storagePath = public_path('storage/images'); // Path to public storage folder
 
         // Ensure the directory exists
-        if (!File::exists($storagePath)) {
-            File::makeDirectory($storagePath, 0775, true);
-        }
+        // if (!File::exists($storagePath)) {
+        //     File::makeDirectory($storagePath, 0775, true);
+        // }
 
-        $savedImagePaths = [];
-        $imageCounter = 1; // Initialize a counter to keep track of the image number
+        // $savedImagePaths = [];
+        // $imageCounter = 1; // Initialize a counter to keep track of the image number
 
-        foreach ($imageUrls as $imageUrl) {
-            $imageContent = file_get_contents($imageUrl); // Download image content
+        // foreach ($imageUrls as $imageUrl) {
+        //     $imageContent = file_get_contents($imageUrl); // Download image content
 
-            if ($imageContent) {
-                // Rename image to a static name (e.g., 1.jpeg, 2.jpeg, etc.)
-                $imageName = $imageCounter . '.jpeg';  // Set the desired file name
-                $filePath = $storagePath . '/' . $imageName; // Define the full save path
+        //     if ($imageContent) {
+        //         // Rename image to a static name (e.g., 1.jpeg, 2.jpeg, etc.)
+        //         $imageName = $imageCounter . '.jpeg';  // Set the desired file name
+        //         $filePath = $storagePath . '/' . $imageName; // Define the full save path
 
-                File::put($filePath, $imageContent); // Save the file locally
-                $savedImagePaths[] = 'public/images/' . $imageName; // Store the relative path
+        //         File::put($filePath, $imageContent); // Save the file locally
+        //         $savedImagePaths[] = 'public/images/' . $imageName; // Store the relative path
 
-                $imageCounter++; // Increment the counter for the next image
-            } else {
-                echo "Failed to download: " . $imageUrl . PHP_EOL;
-            }
-        }
+        //         $imageCounter++; // Increment the counter for the next image
+        //     } else {
+        //         echo "Failed to download: " . $imageUrl . PHP_EOL;
+        //     }
+        // }
 
 
 
@@ -81,23 +81,23 @@ class PostAndStuff extends Seeder
             $randomUser = $faker->randomElement($postUsers); // Full user object
             $posts[] = ForumPost::create([
                 'category' => $faker->word(),
-                'title' => $faker->sentence(),
-                'content' => $faker->paragraph(),
-                'views' => 0,
+                'title' => $faker->realText(10),
+                'content' => $faker->realText(),
+                'views' => $faker->numberBetween(0,16),
                 'user_id' => $randomUser->id, // Use the user's ID
             ]);
         }
 
         // Create ImagePosts
-        for ($i = 0; $i < 5; $i++) {
-            $randomUser = $faker->randomElement($postUsers); // Full user object
-            ImagePost::create([
-                'url' => $faker->randomElement($savedImagePaths), // Use local path
-                'title' => $faker->word(),
-                'description' => $faker->paragraph(),
-                'user_id' => $randomUser->id, // Use the user's ID
-            ]);
-        }
+        // for ($i = 0; $i < 5; $i++) {
+        //     $randomUser = $faker->randomElement($postUsers); // Full user object
+        //     ImagePost::create([
+        //         'url' => $faker->randomElement($savedImagePaths), // Use local path
+        //         'title' => $faker->word(),
+        //         'description' => $faker->paragraph(),
+        //         'user_id' => $randomUser->id, // Use the user's ID
+        //     ]);
+        // }
 
         // Create main ForumComments
         $mainComments = [];
