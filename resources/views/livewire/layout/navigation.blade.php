@@ -76,14 +76,16 @@ $logout = function (Logout $logout) {
                 </x-dropdown>
 
                 @else
-                <a href="{{ route('login') }}"
-                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                    Log in
-                </a>
-                <a href="{{ route('register') }}"
-                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                    Register
-                </a>
+                <div class="flex space-x-4">
+                    <a href="{{ route('login') }}"
+                        class="rounded-md px-4 py-2 text-white bg-pink-200 hover:bg-pink-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 transition">
+                        Log in
+                    </a>
+                    <a href="{{ route('register') }}"
+                        class="rounded-md px-4 py-2 text-white bg-pink-200 hover:bg-pink-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 transition">
+                        Register
+                    </a>
+                </div>
                 @endauth
             </div>
             <!-- Hamburger -->
